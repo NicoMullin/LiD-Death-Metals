@@ -21,15 +21,11 @@ int main(void)
     printf("%s", log);
     if (!strstr(log, "slot loop not found") || !strstr(log, "icon draw place not found") ||
         !strstr(log, "sign's set-up not found") ||
-        !strstr(log, "exchange stays off") || !strstr(log, "random stews stay off") ||
-        !strstr(log, "only the first stew is offered") || !strstr(log, "multi pulls may repeat") ||
-        !strstr(log, "multi pulls go one pull at a time")) {
+        !strstr(log, "exchange stays off")) {
         puts("FAIL: the log does not say the code was not found");
         fails++;
     }
-    if (strstr(log, "again") || strstr(log, "are answered") || strstr(log, "shows the Death Metal") ||
-        strstr(log, "draw a fresh") || strstr(log, "is offered, not only") || strstr(log, "are logged") ||
-        strstr(log, "gives no decal twice") || strstr(log, "in one request")) {
+    if (strstr(log, "again") || strstr(log, "are answered") || strstr(log, "shows the Death Metal")) {
         puts("FAIL: the log says something was changed");
         fails++;
     }

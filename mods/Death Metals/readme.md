@@ -80,14 +80,20 @@ The Death Metal sign in messages (the quest window, the Coin Locker confirm)
 needs `lid-deathmetals.dll` 0.3.0 or later. Without it those messages show the
 Kill Coin sign next to a Death Metal amount.
 
-The Death Metal stew needs `lid-deathmetals.dll` 0.4.3 or later. The offline
-game offers only one normal stew at a time, and draws every normal stew from
-one list kept in your save; the plugin has the shop offer both stews and gives
+The Death Metal stew needs `lid-stewpull.dll`, the plugin of
+[LiD Stew Multi Pull](https://github.com/NicoMullin/LiD-Stew-Multi-Pull) (in
+the manager: **Get mods...**, then **Stew Multi Pull**). The offline game
+offers only one normal stew at a time, and draws every normal stew from one
+list kept in your save; that plugin has the shop offer both stews and gives
 the Death Metal stew a fresh roll of its own. Without it the Death Metal stew
-does not appear. With plugin 0.5.0, a Stew Multi Pull purchase is one request
-- paid, drawn and saved once - instead of one per pull, for both stews. The
-Kill Coin stew still gives the decals lined up in your save, repeats and all;
-only the Death Metal stew never repeats within a multi pull.
+does not appear. With the Stew Multi Pull mod on as well, a Purchase xN is one
+request - paid, drawn and saved once. The Kill Coin stew still gives the
+decals lined up in your save, repeats and all; only the Death Metal stew never
+repeats within a multi pull.
+
+Up to `lid-deathmetals.dll` 0.5.x, this stew code was in the Death Metals
+plugin. Since 0.6.0 it is only in `lid-stewpull.dll`; update both together, as
+0.5.x and `lid-stewpull.dll` would change the same server code.
 
 ## Installing
 

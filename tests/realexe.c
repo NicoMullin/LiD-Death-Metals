@@ -50,25 +50,6 @@ int main(int argc, char **argv)
     show("  and its clean-up", base, pc.destroy, 0xe1c9e0);
     printf("\nexchange can be switched on: %s\n", pc.exchange_ok ? "yes" : "NO");
     if (!pc.exchange_ok) fails++;
-    show("stew pull's normal draw", base, pc.stew, 0x13cc468);
-    show("  the normal draw", base, pc.normal_draw, 0x13cc060);
-    show("  odds list query", base, pc.odds_query, 0x13b3c60);
-    show("  odds rows freed", base, pc.odds_free, 0x109d2f0);
-    show("  memory (realloc)", base, pc.game_realloc, 0xdfef0);
-    show("stew shop's stew list", base, pc.shop_list, 0x115d420);
-    show("  filled by", base, pc.fill_stews, 0x13af1f0);
-    show("stew list: adds one, stops", base, pc.stew_ids, 0x13b01b8);
-    show("  the add", base, pc.stew_ids_add, 0x203b0);
-    show("  the walk", base, pc.stew_ids_loop, 0x13b0140);
-    show("pull's check of its stews", base, pc.pull_ids, 0x11648fe);
-    show("  the check", base, pc.pull_ids_check, 0x130c020);
-    show("pull's payment", base, pc.pay, 0x11649dc);
-    show("  pay for one", base, pc.pay_one, 0x1326370);
-    show("  the purchase", base, pc.purchase, 0x1326200);
-    show("pull's draw into the reply", base, pc.drawn, 0x1164b46);
-    show("  the draw of n", base, pc.draw_all, 0x13cc2a0);
-    printf("\nrandom stews can be switched on: %s\n", pc.stew_ok ? "yes" : "NO");
-    if (!pc.stew_ok) fails++;
     printf(fails ? "\n%d FAILED\n" : "\nall found\n", fails);
     return fails != 0;
 }

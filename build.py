@@ -149,7 +149,6 @@ def main():
         ok = run_test("patches", [harness], dll)
         ok = run_test("unknown-game", [TESTS / "nocode.c"], dll) and ok
         ok = run_test("exchange", [TESTS / "exchange.c"], None) and ok
-        ok = run_test("stew", [TESTS / "stew.c"], None) and ok
         if args.exe:
             ok = run_test("real-exe", [TESTS / "realexe.c"], None, args.exe.resolve()) and ok
         shutil.rmtree(OUT / "test")

@@ -39,27 +39,23 @@ It comes in two parts that go together:
   request, so the plugin adds it: it checks you hold the Death Metals, pays
   the Kill Coins (`EXCHANGE_RATE` in `masters.db`, 5,000 each) with the game's
   own function, takes the Death Metals (free ones first) and saves.
-- **The Death Metal stew** (mod 0.6.0 and plugin 0.5.0). A second stew at
-  the Mushroom Stew shop, for Death Metals: one random ★★★ or better decal a
-  pull. The stew menu still has all the online game's code for it; the
-  offline release only added a filter that leaves Death Metal stews out of
-  the list, and the mod's `BrgGame.upk` patch takes it out. The offline server
-  draws every normal stew from one list rolled ahead and kept in the save, so
-  the plugin gives stews whose odds list is named `SKLGACH_RANDOM_...` a fresh
-  pick from their own list, weighted by the odds, every pull. Other stews are
-  untouched. The offline server also offered only the first normal stew in
-  `masters.db`; the plugin has it offer every one, and logs the list each time
-  the shop opens. Which decals it gives is a Configuration setting (LiD DB
-  Editor 0.12.1's decal picker): every ★★★ and up from the normal stew until
-  the player picks.
-- **Multi pulls in one request** (plugin 0.5.0, with the Stew Multi Pull mod
-  0.4.0 or later). That mod's `BrgGame.upk` patch marks each pull of a
-  "Purchase xN" in the request's list of stews (which the server only checks
-  with a function that always says yes): the pulls left, and on the first pull
-  a request for the whole run. The plugin reads them there. The whole run is
-  then one request: the game's own purchase charges the price times N, the
-  game's draw runs N times into the reply, and the game saves once - for the
-  Kill Coin stew too. A random stew gives no decal twice in one run.
+- **The Death Metal stew** (mod 0.6.0). A second stew at the Mushroom Stew
+  shop, for Death Metals: one random ★★★ or better decal a pull. The stew menu
+  still has all the online game's code for it; the offline release only added
+  a filter that leaves Death Metal stews out of the list, and the mod's
+  `BrgGame.upk` patch takes it out. Which decals it gives is a Configuration
+  setting (LiD DB Editor 0.12.1's decal picker): every ★★★ and up from the
+  normal stew until the player picks. The offline server offers only the
+  first normal stew and draws every normal stew from one list kept in the
+  save, so the stew also needs the plugin from
+  [LiD Stew Multi Pull](https://github.com/NicoMullin/LiD-Stew-Multi-Pull),
+  `lid-stewpull.dll`: it has the shop offer every stew and gives this one a
+  fresh pick of its own every pull.
+
+Up to 0.5.x, `lid-deathmetals.dll` held that stew code too, and the one-request
+multi pull. In 0.6.0 all of it moved to `lid-stewpull.dll`, so the multi pull
+no longer needs Death Metals. Update both together: Death Metals 0.5.x and
+`lid-stewpull.dll` would change the same server code.
 - **Prices in Death Metals** (mod, 0.2.0 and 0.3.0). Each one is switched on
   and priced in the mod's Configuration tab: Express Passes (on at first, the
   online game's 33 and 6 Death Metals) and the Coin Locker expansion (off at
