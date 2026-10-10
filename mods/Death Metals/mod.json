@@ -1,0 +1,166 @@
+{
+  "id": "Death Metals",
+  "name": "Death Metals",
+  "description": "Brings Death Metals back: the 20 Death Metal rewards pay Death Metals again instead of 5,000 KC each, Uncle Death's menu gets back Convert Death Metals and Currency Details, and (each switchable in Configuration) Express Passes cost Death Metals again, the Coin Locker expansion can too, and the Mushroom Stew shop gets a Death Metal stew again. The exchange and the Death Metal count on screen need lid-deathmetals.dll - see the readme. Needs LiD DB Editor 0.12.1 or newer.",
+  "version": "0.6.0",
+  "author": "KSFA",
+  "category": "Game content",
+  "tags": [
+    "death-metals",
+    "rewards",
+    "mystery-bags",
+    "uncle-death",
+    "exchange",
+    "vip",
+    "coin-locker",
+    "stew",
+    "decals"
+  ],
+  "game_version": [
+    "5.0.4.1.0 - 1.89",
+    "5.0.4.1.0 - 1.89 (Steam 5.0.4.2.0)"
+  ],
+  "min_manager_version": "0.12.1",
+  "requires": [],
+  "conflicts_with": [
+    "death-metal-rewards-test"
+  ],
+  "requires_check_off": [
+    "BrgGame.upk"
+  ],
+  "settings": [
+    {
+      "id": "vip",
+      "label": "Express Passes cost Death Metals",
+      "type": "toggle",
+      "default": true,
+      "group": "Express Passes (VIP)",
+      "help": "Uncle Death sells Express Passes for Death Metals, as in the online game. Off: they cost Kill Coins, as in the offline game (165,000 and 30,000)."
+    },
+    {
+      "id": "vip_price",
+      "label": "Express Pass (30 days) price",
+      "type": "integer",
+      "default": 33,
+      "min": 1,
+      "max": 9999,
+      "unit": "DM",
+      "group": "Express Passes (VIP)",
+      "help": "33 Death Metals is the online game's price (the offline game's 165,000 Kill Coins is 33 x 5,000)."
+    },
+    {
+      "id": "oneday_price",
+      "label": "1-Day Pass price",
+      "type": "integer",
+      "default": 6,
+      "min": 1,
+      "max": 9999,
+      "unit": "DM",
+      "group": "Express Passes (VIP)",
+      "help": "6 Death Metals is the online game's price (the offline game's 30,000 Kill Coins is 6 x 5,000)."
+    },
+    {
+      "id": "coinlocker",
+      "label": "Coin Locker expansion costs Death Metals",
+      "type": "toggle",
+      "default": false,
+      "group": "Coin Locker",
+      "help": "Uncle Death expands the Coin Locker for Death Metals. The online game sold it for Kill Coins too (10,000), so this is off unless you want it."
+    },
+    {
+      "id": "coinlocker_price",
+      "label": "Coin Locker expansion price",
+      "type": "integer",
+      "default": 2,
+      "min": 1,
+      "max": 9999,
+      "unit": "DM",
+      "group": "Coin Locker",
+      "help": "2 Death Metals matches the stock 10,000 Kill Coins (2 x 5,000)."
+    },
+    {
+      "id": "stew",
+      "label": "Death Metal stew",
+      "type": "toggle",
+      "default": true,
+      "group": "Death Metal stew",
+      "help": "A second stew at the Mushroom Stew shop, as in the online game: one random decal a pull from the ones you choose below (every ★★★ and up, unless you pick), for Death Metals. Every pull is a fresh roll, so repeats can happen. With the Stew Multi Pull mod (0.4.0 or later) its Purchase xN gives no decal twice. Needs lid-deathmetals.dll 0.4.3 or later; 0.5.0 makes a Purchase xN one quick request."
+    },
+    {
+      "id": "stew_price",
+      "label": "Death Metal stew price",
+      "type": "integer",
+      "default": 10,
+      "min": 1,
+      "max": 9999,
+      "unit": "DM",
+      "group": "Death Metal stew",
+      "help": "Death Metals a pull. 10 is the price still in the game's database."
+    },
+    {
+      "id": "stew_decals",
+      "label": "Decals in the Death Metal stew",
+      "type": "decals",
+      "default_label": "Every ★★★ and up from the normal stew",
+      "default_sql": "SELECT o.sklid FROM master_skillgacha_odds o JOIN master_skill s ON s.id = o.sklid WHERE o.id = 'SKLGACH_NORMAL_OFFLINE' AND o.odds > 0 AND s.rarity >= 3",
+      "group": "Death Metal stew",
+      "help": "Which decals the stew can give. The list is every decal in your masters.db, including ones other mods add, so switch those mods on first. Each keeps the odds the normal stew gives it; one the normal stew never gives gets the normal stew's odds for its stars (★ 74, ★★ 72, ★★★ 40, ★★★★ 4, ★★★★★ 2)."
+    }
+  ],
+  "patches": [
+    {
+      "type": "raw_sql",
+      "id": "rewards",
+      "description": "RWD_MEDAL_1 to RWD_MEDAL_20 pay Death Metals again (were 5,000 KC per metal)",
+      "sql": "UPDATE master_reward SET type = 'MEDAL', num = CAST(substr(rwdid, 11) AS INTEGER) WHERE rwdid GLOB 'RWD_MEDAL_[0-9]*';"
+    },
+    {
+      "type": "tfc_installer",
+      "id": "menu",
+      "source": "tfc/menu",
+      "description": "Uncle Death's menu: Convert Death Metals and Currency Details (BrgGame.upk)"
+    },
+    {
+      "type": "raw_sql",
+      "id": "vip-prices",
+      "when": {"vip": true},
+      "description": "Express Passes cost {{vip_price}} and {{oneday_price}} Death Metals, and their description says so",
+      "sql": "UPDATE master_shop_product_price SET price = 0, spirit = 0, medal = {{vip_price}} WHERE id = 'PRD_VIP_PASS';\nUPDATE master_shop_product_price SET price = 0, spirit = 0, medal = {{oneday_price}} WHERE id = 'PRD_ONEDAY_PASS';\nUPDATE master_text SET txt = CASE lang\n  WHEN 'int' THEN replace(txt, 'Kill Coins', 'Death Metal')\n  WHEN 'esn' THEN replace(txt, 'Kill Coins', 'Death Metal')\n  WHEN 'deu' THEN replace(txt, 'Meuchel-Münzen', 'Todesmetall')\n  WHEN 'fra' THEN replace(txt, 'des\nPièces-meurtre', 'du\nmétal mortuaire')\n  WHEN 'ita' THEN replace(txt, 'Monete Carneficina', 'il Metallo')\n  WHEN 'ptb' THEN replace(txt, 'Moedas de Morte', 'Metal da Morte')\n  WHEN 'jpn' THEN replace(txt, 'キルコイン', 'デスメタル')\n  WHEN 'kor' THEN replace(txt, '킬 코인으로', '데스 메탈로')\n  WHEN 'chn' THEN replace(txt, '擊殺硬幣', '死神金屬')\n  WHEN 'kan' THEN replace(txt, '击杀硬币', '死神金属')\n  ELSE txt END\nWHERE sct = 'BUY_VIP' AND id = 'TXT_DESCRIPTION';"
+    },
+    {
+      "type": "tfc_installer",
+      "id": "vip-screen",
+      "when": {"vip": true},
+      "source": "tfc/vip",
+      "description": "Uncle Death's Buy Express Pass screen reads, checks and shows Death Metals (BrgGame.upk)"
+    },
+    {
+      "type": "raw_sql",
+      "id": "coinlocker-price",
+      "when": {"coinlocker": true},
+      "description": "The Coin Locker expansion costs {{coinlocker_price}} Death Metals, and its confirm message shows the Death Metal sign",
+      "sql": "UPDATE master_shop_product_price SET price = 0, spirit = 0, medal = {{coinlocker_price}} WHERE id = 'PRD_EXPAND_COINLOCKER';\nUPDATE master_text SET txt = replace(txt, '#MNEY_DM_FL', '#MNEY_DM') WHERE sct = 'EXTENSION_CL' AND id = 'TXT_CONFIM';"
+    },
+    {
+      "type": "tfc_installer",
+      "id": "coinlocker-screen",
+      "when": {"coinlocker": true},
+      "source": "tfc/coinlocker",
+      "description": "Uncle Death's Expand Coin Locker reads and checks Death Metals (BrgGame.upk)"
+    },
+    {
+      "type": "raw_sql",
+      "id": "stew-list",
+      "when": {"stew": true},
+      "description": "The Death Metal stew: {{stew_price}} Death Metals a pull, every ★★★ or better decal of the normal stew",
+      "sql": "UPDATE master_shop_product_price SET price = 0, spirit = 0, medal = {{stew_price}} WHERE id = 'PRD_SKILL_GACHA_MEDAL';\nINSERT OR REPLACE INTO master_skillgacha (id, odds_id, type, name, \"desc\", menu_priority, product_id, platform, is_fest, is_display_days_left, fest_text, fest_detail_text, banner, menu_text_id, confirm_text_id, icon_type, matinee_type, inspires, expires) VALUES ('SKLGACH_RANDOM_DM', 'SKLGACH_RANDOM_DM', 'NORMAL', 'Death Metal stew', 'Death Metal stew', 2, 'PRD_SKILL_GACHA_MEDAL', 0, 0, 0, '', '', '', 'MSHR_KAIKAN.TXT_GACHA_DEATHMETAL', 'MSHR_KAIKAN.TXT_MS_GACHA_DM', 'DEATH_METAL', 'NORMAL', 1480730400, 2147483647);\nINSERT OR REPLACE INTO master_skillgacha_odds (id, sklid, odds, display_priority) SELECT 'SKLGACH_RANDOM_DM', s.id, COALESCE((SELECT MAX(o.odds) FROM master_skillgacha_odds o WHERE o.id = 'SKLGACH_NORMAL_OFFLINE' AND o.sklid = s.id AND o.odds > 0), CASE s.rarity WHEN 1 THEN 74 WHEN 2 THEN 72 WHEN 3 THEN 40 WHEN 4 THEN 4 ELSE 2 END), COALESCE((SELECT MAX(o.display_priority) FROM master_skillgacha_odds o WHERE o.id = 'SKLGACH_NORMAL_OFFLINE' AND o.sklid = s.id AND o.odds > 0), 0) FROM master_skill s WHERE s.id IN ({{stew_decals}});\nINSERT OR REPLACE INTO master_text (sct, id, snd, lang, txt, type) VALUES\n  ('MSHR_KAIKAN', 'TXT_GACHA_DEATHMETAL', '', 'int', 'Buy decals with Death Metal', 4),\n  ('MSHR_KAIKAN', 'TXT_GACHA_DEATHMETAL', '', 'esn', 'Comprar calcomanía con Death Metal', 4),\n  ('MSHR_KAIKAN', 'TXT_GACHA_DEATHMETAL', '', 'deu', 'Abziehbilder für Todesmetall', 4),\n  ('MSHR_KAIKAN', 'TXT_GACHA_DEATHMETAL', '', 'fra', 'Décalco. pour métal mortuaire', 4),\n  ('MSHR_KAIKAN', 'TXT_GACHA_DEATHMETAL', '', 'ita', 'Decalcomanie per Metallo', 4),\n  ('MSHR_KAIKAN', 'TXT_GACHA_DEATHMETAL', '', 'ptb', 'Adesivos por Metal da Morte', 4),\n  ('MSHR_KAIKAN', 'TXT_GACHA_DEATHMETAL', '', 'jpn', 'デスメタルでデカール購入', 4),\n  ('MSHR_KAIKAN', 'TXT_GACHA_DEATHMETAL', '', 'kor', '데스 메탈로 데칼 구매', 4),\n  ('MSHR_KAIKAN', 'TXT_GACHA_DEATHMETAL', '', 'chn', '以死神金屬購買貼飾', 4),\n  ('MSHR_KAIKAN', 'TXT_GACHA_DEATHMETAL', '', 'kan', '以死神金属购买贴饰', 4);"
+    },
+    {
+      "type": "tfc_installer",
+      "id": "stew-menu",
+      "when": {"stew": true},
+      "source": "tfc/stew",
+      "description": "The Mushroom Stew shop lists Death Metal stews again (BrgGame.upk)"
+    }
+  ]
+}
