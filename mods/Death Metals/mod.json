@@ -2,7 +2,7 @@
   "id": "Death Metals",
   "name": "Death Metals",
   "description": "Brings Death Metals back: the 20 Death Metal rewards pay Death Metals again instead of 5,000 KC each, Uncle Death's menu gets back Convert Death Metals and Currency Details, and (each switchable in Configuration) Express Passes cost Death Metals again, the Coin Locker expansion can too, and the Mushroom Stew shop gets a Death Metal stew again. The exchange and the Death Metal count on screen need lid-deathmetals.dll, and the Death Metal stew needs lid-stewpull.dll (Stew Multi Pull) - see the readme. Needs LiD DB Editor 0.12.1 or newer.",
-  "version": "0.6.1",
+  "version": "0.6.2",
   "author": "KSFA",
   "category": "Game content",
   "tags": [
@@ -25,6 +25,7 @@
   "conflicts_with": [
     "death-metal-rewards-test"
   ],
+  "plugin": ["lid-deathmetals.dll", "lid-stewpull.dll"],
   "requires_check_off": [
     "BrgGame.upk"
   ],

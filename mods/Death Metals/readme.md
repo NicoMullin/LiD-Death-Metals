@@ -115,3 +115,13 @@ Stew Multi Pull, Instant Drops and Fighter Class Passives.
 Untick the mod and save. The rewards pay Kill Coins again, the menu entries
 go and everything costs what the offline game charges. Death Metals you
 already have stay in your save.
+
+## Switched with this mod
+
+From LiD DB Editor 0.12.8, saving with this mod ticked switches
+`lid-deathmetals.dll` and `lid-stewpull.dll` on, and saving with it unticked
+switches them off: renamed to `.dll.off`, which the Plugin Loader skips.
+Nothing is deleted, and ticking the mod again brings them back. Close the game
+first. `lid-stewpull.dll` is named too because the Death Metal stew needs it;
+it stays on while either this mod or Stew Multi Pull is ticked. If you do not
+have it, the manager only mentions it.
