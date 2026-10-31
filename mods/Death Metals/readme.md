@@ -81,13 +81,15 @@ needs `lid-deathmetals.dll` 0.3.0 or later. Without it those messages show the
 Kill Coin sign next to a Death Metal amount.
 
 The Death Metal stew needs `lid-stewpull.dll`, the plugin of
-[LiD Stew Multi Pull](https://github.com/NicoMullin/LiD-Stew-Multi-Pull) (in
-the manager: **Get mods...**, then **Stew Multi Pull**). The offline game
-offers only one normal stew at a time, and draws every normal stew from one
-list kept in your save; that plugin has the shop offer both stews and gives
-the Death Metal stew a fresh roll of its own. Without it the Death Metal stew
-does not appear. With the Stew Multi Pull mod on as well, a Purchase xN is one
-request - paid, drawn and saved once. The Kill Coin stew still gives the
+[LiD Stew Multi Pull](https://github.com/NicoMullin/LiD-Stew-Multi-Pull).
+**Get mods...** in the manager puts it in along with Death Metals (manager
+0.13.4 or newer), and it is switched on and off with this mod. You do not need
+the Stew Multi Pull mod itself. The offline game offers only one normal stew
+at a time, and draws every normal stew from one list kept in your save; that
+plugin has the shop offer both stews and gives the Death Metal stew a fresh
+roll of its own. Without it the Death Metal stew does not appear. With the
+Stew Multi Pull mod on as well, the stew gets Purchase xN, and a multi pull is
+one request - paid, drawn and saved once. The Kill Coin stew still gives the
 decals lined up in your save, repeats and all; only the Death Metal stew never
 repeats within a multi pull.
 
